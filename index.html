@@ -6,53 +6,31 @@
     <title>Momma Says</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <style>
-        :root { --bg: #000; --accent: #ff4500; --text: #fff; --gold: #ffd700; --bubble: #222; --skin: #5d3a1a; --wrap: #e63946; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin:0; }
-        
-        /* 紀錄圖示 */
-        .header { text-align: center; margin-bottom: 25px; }
-        .fire { font-size: 50px; filter: drop-shadow(0 0 10px var(--accent)); }
-        .streak-val { font-size: 20px; font-weight: 900; color: var(--gold); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="fire">🔥</div>
+        <div class="streak-val">STREAK: <span id="streakCount">0</span> DAYS</div>
+    </div>
 
-        /* Brenda 區塊 */
-        .brenda-wrapper { display: flex; align-items: center; gap: 15px; width: 100%; max-width: 420px; margin-bottom: 30px; }
-        
-        /* --- CSS 繪製的黑人大媽頭像 --- */
-        .momma-avatar { width: 90px; height: 90px; border-radius: 50%; background: #1a1a1a; border: 3px solid var(--accent); position: relative; flex-shrink: 0; box-shadow: 0 5px 15px rgba(255,69,0,0.2); overflow: hidden; }
-        
-        /* 臉部 */
-        .momma-face { width: 60%; height: 65%; background: var(--skin); border-radius: 50%; position: absolute; bottom: 10%; left: 20%; z-index: 2; }
-        
-        /* 頭巾 */
-        .momma-wrap { width: 110%; height: 50%; background: var(--wrap); border-radius: 50% 50% 0 0; position: absolute; top: -5%; left: -5%; z-index: 3; box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2); }
-        .momma-wrap-knot { width: 25px; height: 25px; background: var(--wrap); border-radius: 50%; position: absolute; top: 10px; right: 10px; z-index: 4; border: 2px solid rgba(0,0,0,0.3); }
+    <div class="brenda-zone">
+        <div class="momma-head">👩🏾‍</div>
+        <div class="bubble"><p id="speech">載入中...</p></div>
+    </div>
 
-        /* 眼睛 */
-        .momma-eye { width: 8px; height: 8px; background: #000; border-radius: 50%; position: absolute; top: 35%; z-index: 5; }
-        .momma-eye.left { left: 25%; }
-        .momma-eye.right { right: 25%; }
-        
-        /* 嘴巴 (嚴肅的直線) */
-        .momma-mouth { width: 40%; height: 3px; background: #000; position: absolute; bottom: 25%; left: 30%; z-index: 5; border-radius: 2px; }
+    <div class="card">
+        <input type="number" id="weightVal" placeholder="0.0" step="0.1" inputmode="decimal">
+        <button onclick="saveLog()">寫下來，別找藉口！</button>
+    </div>
 
-        /* 耳環 (金色大圓圈) */
-        .momma-earring { width: 20px; height: 20px; border: 3px solid var(--gold); border-radius: 50%; position: absolute; bottom: 20%; z-index: 1; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); }
-        .momma-earring.left { left: 5px; }
-        .momma-earring.right { right: 5px; }
+    <div class="water-section">
+        <div class="water-title">💧 3000cc 飲水挑戰</div>
+        <div class="grid" id="waterGrid"></div>
+    </div>
 
-        /* 對話框 */
-        .bubble { background: var(--bubble); border-radius: 18px; padding: 20px; position: relative; border: 1px solid #333; flex-grow: 1; min-height: 90px; display: flex; align-items: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
-        .bubble::before { content: ''; position: absolute; left: -9px; top: 35px; border-width: 9px 9px 9px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
-        #speech { font-size: 17px; line-height: 1.5; font-weight: bold; margin: 0; font-style: italic; color: #fff; letter-spacing: 0.5px; }
+    <div id="fastStatus" class="footer"></div>
 
-        /* 輸入與按鈕 */
-        .card { background: #111; border-radius: 18px; padding: 25px; width: 100%; max-width: 420px; border: 1px solid #222; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        input { background: #000; border: 2px solid #333; color: #fff; padding: 18px; font-size: 32px; border-radius: 12px; text-align: center; width: 100%; margin-bottom: 20px; outline: none; transition: 0.2s; }
-        input:focus { border-color: var(--accent); background: #050505; }
-        button { background: var(--accent); color: #fff; border: none; padding: 18px; font-size: 20px; font-weight: 900; border-radius: 12px; width: 100%; cursor: pointer; box-shadow: 0 5px 0 #802300; transition: 0.1s; }
-        button:active { transform: translateY(3px); box-shadow: 0 2px 0 #802300; }
-
-        /* 水杯挑戰 */
-        .water-box { margin-top: 35px; width: 100%; max-width: 420px; text-align: center; background: rgba(0,251,255,0
+    <script src="script.js"></script>
+</body>
+</html>
