@@ -7,97 +7,52 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        :root { --bg: #000; --accent: #ff4500; --text: #fff; --gold: #ffd700; --bubble: #222; }
+        :root { --bg: #000; --accent: #ff4500; --text: #fff; --gold: #ffd700; --bubble: #222; --skin: #5d3a1a; --wrap: #e63946; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin:0; }
-        .header { text-align: center; margin-bottom: 20px; }
+        
+        /* 紀錄圖示 */
+        .header { text-align: center; margin-bottom: 25px; }
         .fire { font-size: 50px; filter: drop-shadow(0 0 10px var(--accent)); }
-        .streak-val { font-size: 20px; font-weight: 900; color: var(--gold); margin-top: 5px; }
-        .brenda-wrapper { display: flex; align-items: flex-start; gap: 10px; width: 100%; max-width: 400px; margin-bottom: 25px; }
-        .brenda-icon { font-size: 50px; background: #1a1a1a; border-radius: 50%; padding: 10px; border: 2px solid var(--accent); flex-shrink: 0; }
-        .bubble { background: var(--bubble); border-radius: 15px; padding: 15px; position: relative; border: 1px solid #333; flex-grow: 1; min-height: 80px; display: flex; align-items: center; }
-        .bubble::before { content: ''; position: absolute; left: -8px; top: 20px; border-width: 8px 8px 8px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
-        #speech { font-size: 16px; line-height: 1.5; font-weight: bold; margin: 0; font-style: italic; color: #fff; }
-        .card { background: #111; border-radius: 15px; padding: 20px; width: 100%; max-width: 400px; border: 1px solid #222; }
-        input { background: #000; border: 2px solid #333; color: #fff; padding: 15px; font-size: 28px; border-radius: 10px; text-align: center; width: 100%; margin-bottom: 15px; outline: none; }
-        button { background: var(--accent); color: #fff; border: none; padding: 15px; font-size: 18px; font-weight: 900; border-radius: 10px; width: 100%; cursor: pointer; box-shadow: 0 4px 0 #802300; }
-        button:active { transform: translateY(2px); box-shadow: none; }
-        .water-box { margin-top: 30px; width: 100%; max-width: 400px; text-align: center; background: rgba(0,251,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(0,251,255,0.1); }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .drop { font-size: 32px; cursor: pointer; opacity: 0.15; transition: 0.3s; }
-        .drop.active { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 8px #00fbff); }
-        .footer { margin-top: auto; font-size: 12px; color: #444; padding: 20px; text-align: center; }
-    </style>
-</head>
-<body>
+        .streak-val { font-size: 20px; font-weight: 900; color: var(--gold); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
 
-    <div class="header">
-        <div class="fire">🔥</div>
-        <div class="streak-val"><span id="streak">0</span> 天紀錄</div>
-    </div>
+        /* Brenda 區塊 */
+        .brenda-wrapper { display: flex; align-items: center; gap: 15px; width: 100%; max-width: 420px; margin-bottom: 30px; }
+        
+        /* --- CSS 繪製的黑人大媽頭像 --- */
+        .momma-avatar { width: 90px; height: 90px; border-radius: 50%; background: #1a1a1a; border: 3px solid var(--accent); position: relative; flex-shrink: 0; box-shadow: 0 5px 15px rgba(255,69,0,0.2); overflow: hidden; }
+        
+        /* 臉部 */
+        .momma-face { width: 60%; height: 65%; background: var(--skin); border-radius: 50%; position: absolute; bottom: 10%; left: 20%; z-index: 2; }
+        
+        /* 頭巾 */
+        .momma-wrap { width: 110%; height: 50%; background: var(--wrap); border-radius: 50% 50% 0 0; position: absolute; top: -5%; left: -5%; z-index: 3; box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2); }
+        .momma-wrap-knot { width: 25px; height: 25px; background: var(--wrap); border-radius: 50%; position: absolute; top: 10px; right: 10px; z-index: 4; border: 2px solid rgba(0,0,0,0.3); }
 
-    <div class="brenda-wrapper">
-        <div class="brenda-icon">👩🏾‍</div>
-        <div class="bubble">
-            <p id="speech">載入中...</p>
-        </div>
-    </div>
+        /* 眼睛 */
+        .momma-eye { width: 8px; height: 8px; background: #000; border-radius: 50%; position: absolute; top: 35%; z-index: 5; }
+        .momma-eye.left { left: 25%; }
+        .momma-eye.right { right: 25%; }
+        
+        /* 嘴巴 (嚴肅的直線) */
+        .momma-mouth { width: 40%; height: 3px; background: #000; position: absolute; bottom: 25%; left: 30%; z-index: 5; border-radius: 2px; }
 
-    <div class="card">
-        <input type="number" id="weight" placeholder="0.0" step="0.1" inputmode="decimal">
-        <button onclick="log()">給我寫下來！</button>
-    </div>
+        /* 耳環 (金色大圓圈) */
+        .momma-earring { width: 20px; height: 20px; border: 3px solid var(--gold); border-radius: 50%; position: absolute; bottom: 20%; z-index: 1; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); }
+        .momma-earring.left { left: 5px; }
+        .momma-earring.right { right: 5px; }
 
-    <div class="water-box">
-        <div style="font-size: 12px; color: #00fbff; font-weight: bold;">💧 3000cc 飲水進度</div>
-        <div class="grid" id="waterGrid"></div>
-        <div id="wLabel" style="font-size: 11px; margin-top: 10px; color: #00fbff; opacity: 0.6;">0 / 3000 cc</div>
-    </div>
+        /* 對話框 */
+        .bubble { background: var(--bubble); border-radius: 18px; padding: 20px; position: relative; border: 1px solid #333; flex-grow: 1; min-height: 90px; display: flex; align-items: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
+        .bubble::before { content: ''; position: absolute; left: -9px; top: 35px; border-width: 9px 9px 9px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
+        #speech { font-size: 17px; line-height: 1.5; font-weight: bold; margin: 0; font-style: italic; color: #fff; letter-spacing: 0.5px; }
 
-    <div id="fast" class="footer"></div>
+        /* 輸入與按鈕 */
+        .card { background: #111; border-radius: 18px; padding: 25px; width: 100%; max-width: 420px; border: 1px solid #222; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        input { background: #000; border: 2px solid #333; color: #fff; padding: 18px; font-size: 32px; border-radius: 12px; text-align: center; width: 100%; margin-bottom: 20px; outline: none; transition: 0.2s; }
+        input:focus { border-color: var(--accent); background: #050505; }
+        button { background: var(--accent); color: #fff; border: none; padding: 18px; font-size: 20px; font-weight: 900; border-radius: 12px; width: 100%; cursor: pointer; box-shadow: 0 5px 0 #802300; transition: 0.1s; }
+        button:active { transform: translateY(3px); box-shadow: 0 2px 0 #802300; }
 
-    <script>
-        // --- 靈魂語庫 ---
-        const quotes = {
-            welcome: [
-                "妳這兩天跑哪去了？是不是背著我偷吃好料的？！",
-                "看看誰回來了？那個想減肥卻一直盯著菜單看的女孩。",
-                "別在那發呆！趕快把體重報上來，我可沒耐心等妳。",
-                "妳今天最好給我帶點好消息，不然別怪我嘴狠。"
-            ],
-            success: [
-                "紀錄好了。明天要是數字變大，妳就死定了！",
-                "算妳識相。現在去旁邊待著，不准靠近廚房！",
-                "寫下來了。這種自律才是我女兒，明白嗎？",
-                "很好，這就是態度！現在去給我喝水！"
-            ],
-            annoyed: [
-                "今天量過了！去做深蹲，別在這煩我！",
-                "妳想量幾次？量一百次妳也不會瞬間變瘦，走開！",
-                "別一直盯著數字看，數字不會因為妳看它就變小！"
-            ],
-            water: [
-                "喝完 3000cc 了？算妳乖，腦袋總算清醒點了。",
-                "很好，至少妳現在的體內不是沙漠。繼續保持！",
-                "水喝夠了？那妳現在應該沒空去想炸雞了吧？"
-            ]
-        };
-
-        let s = JSON.parse(localStorage.getItem('momma_v6')) || { streak: 0, last: null, water: 0 };
-
-        function init() {
-            document.getElementById('streak').innerText = s.streak;
-            const grid = document.getElementById('waterGrid');
-            for(let i=0; i<8; i++) {
-                let span = document.createElement('span');
-                span.className = 'drop';
-                span.innerText = '💧';
-                span.onclick = () => d(i);
-                grid.appendChild(span);
-            }
-            upWater();
-            ckFast();
-            
-            // 初始隨機台詞
-            const today = new Date().toDateString();
-            if(s.last !== today)
+        /* 水杯挑戰 */
+        .water-box { margin-top: 35px; width: 100%; max-width: 420px; text-align: center; background: rgba(0,251,255,0
