@@ -1,28 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Momma Says</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/599/599506.png">
-    
     <style>
-        :root { --bg: #0b0b0b; --accent: #ff4500; --text: #ffffff; --secondary: #222; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin: 0; }
-        
-        .streak-container { text-align: center; margin-bottom: 30px; }
-        .streak-fire { font-size: 60px; filter: drop-shadow(0 0 10px var(--accent)); }
-        .streak-number { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
-
-        .brenda-avatar { font-size: 40px; margin-bottom: -10px; z-index: 1; }
-        .brenda-box { background: var(--secondary); border-radius: 20px; padding: 25px; width: 100%; max-width: 400px; margin-bottom: 30px; border: 1px solid #333; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .brenda-box::after { content: ''; position: absolute; top: -10px; left: 30px; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid var(--secondary); }
-        .brenda-name { color: var(--accent); font-size: 12px; font-weight: bold; margin-bottom: 10px; display: block; }
-        #brendaSpeech { font-size: 18px; line-height: 1.4; font-weight: 600; font-style: italic; }
-
-        .input-group { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
-        input { background: #1a1a1a; border: 2px solid #333; color: #fff; padding: 20px; font-size: 28px; border-radius: 15px; text-align: center; outline: none; transition: border 0.3s; }
-        input:focus {
+        body { background: #000; color: #ff4500; text-align: center; font-family: sans-serif; padding: 50px; }
+        .box { border: 2px solid #ff4500; padding: 20px; border-radius: 15px; }
+        button { background: #ff4500; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🔥 Momma Says</h1>
+        <p id="msg">"Get your ass on the scale, child!"</p>
+        <input type="number" id="w" placeholder="Weight" style="width:80%; padding:10px; border-radius:5px;">
+        <button onclick="document.getElementById('msg').innerText='Logged! Now go drink water.'">LOG IT</button>
+    </div>
+    <p style="color: #666; margin-top: 50px;">If you see this, Brenda is alive.</p>
+</body>
+</html>
