@@ -1,22 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Momma Says</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        body { background: #000; color: #ff4500; text-align: center; font-family: sans-serif; padding: 50px; }
-        .box { border: 2px solid #ff4500; padding: 20px; border-radius: 15px; }
-        button { background: #ff4500; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 20px; width: 100%; }
+        :root { --bg: #000; --accent: #ff4500; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        .brenda-box { background: #1a1a1a; border-left: 5px solid var(--accent); padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; margin: 20px 0; }
+        #speech { font-size: 18px; font-weight: bold; font-style: italic; }
+        input { background: #222; border: 1px solid #444; color: #fff; padding: 15px; font-size: 24px; border-radius: 8px; width: 100%; text-align: center; margin-bottom: 10px; }
+        button { background: var(--accent); color: #fff; border: none; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px; width: 100%; cursor: pointer; }
+        .status { font-size: 12px; color: #666; margin-top: 20px; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>🔥 Momma Says</h1>
-        <p id="msg">"Get your ass on the scale, child!"</p>
-        <input type="number" id="w" placeholder="Weight" style="width:80%; padding:10px; border-radius:5px;">
-        <button onclick="document.getElementById('msg').innerText='Logged! Now go drink water.'">LOG IT</button>
+    <div style="font-size: 50px;">🔥 <span id="streak">0</span></div>
+    <div style="font-size: 14px; font-weight: bold;">STREAK</div>
+
+    <div class="brenda-box">
+        <div style="color:var(--accent); font-size:10px; margin-bottom:5px;">BRENDA SAYS:</div>
+        <p id="speech">"Finally! Log your weight or I'm coming for you."</p>
     </div>
-    <p style="color: #666; margin-top: 50px;">If you see this, Brenda is alive.</p>
+
+    <input type="number" id="weight" placeholder="0.0" step="0.1" inputmode="decimal">
+    <button onclick="logWeight()">LOG IT NOW</button>
+
+    <div id="fastInfo" class="status">Checking 36H Fast...</div>
+
+    <script>
+        let data = JSON.parse(localStorage.getItem('momma')) || { streak: 0, last: null };
+        document.getElementById('streak').innerText = data.streak;
+
+        function logWeight() {
+            const w = document.getElementById('weight').value;
+            if(!w) return alert("Enter a number, quitter!");
+            
+            data.streak++;
+            data.last = new Date().toDateString();
+            localStorage.setItem('momma', JSON.stringify(data));
+            
+            document.getElementById('streak').innerText = data.streak;
+            document.getElementById('speech').innerText = "Logged! Now get out of my face and drink 3000cc of water.";
+        }
+
+        // 36H 斷食邏輯 (週一 18:00 開始)
+        function checkFast() {
+            const now = new Date();
+            const day = now.getDay();
+            const hr = now.getHours();
+            let m = "";
+            if(day === 1 && hr >= 18) m = "🚫 36H FAST STARTED. STOP EATING.";
+            else if(day === 2) m = "⏳ TUESDAY: Mid-fast. Keep going, badass.";
+            else if(day === 3 && hr < 8) m = "🏁 ALMOST DONE. Stay strong.";
+            else m = "✅ FEEDING WINDOW OPEN.";
+            document.getElementById('fastInfo').innerText = m;
+        }
+        checkFast();
+    </script>
 </body>
 </html>
