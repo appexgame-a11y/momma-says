@@ -6,41 +6,18 @@
     <title>Momma Says</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="header">
-        <div class="fire">🔥</div>
-        <div class="streak-val">STREAK: <span id="streakCount">0</span> DAYS</div>
-    </div>
+    <style>
+        :root { --bg: #000; --accent: #ff4500; --gold: #ffd700; --bubble: #222; --skin: #5d3a1a; --wrap: #e63946; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: #fff; font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin:0; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .fire { font-size: 50px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .streak-val { font-size: 18px; color: var(--gold); font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
 
-    <div class="brenda-zone">
-        <div class="brenda-zone">
-        <div class="momma-head">
-            <span class="eye eye-l"></span>
-            <span class="eye eye-r"></span>
-            <span class="mouth"></span>
-            <div class="earring earring-l"></div>
-            <div class="earring earring-r"></div>
-            <div class="knot"></div>
-        </div>
-        <div class="bubble"><p id="speech">載入中...</p></div>
-    </div>
-        <div class="bubble"><p id="speech">載入中...</p></div>
-    </div>
-
-    <div class="card">
-        <input type="number" id="weightVal" placeholder="0.0" step="0.1" inputmode="decimal">
-        <button onclick="saveLog()">寫下來，別找藉口！</button>
-    </div>
-
-    <div class="water-section">
-        <div class="water-title">💧 3000cc 飲水挑戰</div>
-        <div class="grid" id="waterGrid"></div>
-    </div>
-
-    <div id="fastStatus" class="footer"></div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        /* Brenda + 對話框 (統一放在一個區塊) */
+        .brenda-zone { display: flex; align-items: center; gap: 15px; width: 100%; max-width: 420px; margin-bottom: 30px; }
+        
+        /* CSS 繪製的專屬靈魂頭像 */
+        .momma-avatar { width: 90px; height: 90px; border-radius: 50%; background: #1a1a1a; border: 3px solid var(--accent); position: relative; flex-shrink: 0; box-shadow: 0 5px 15px rgba(255,69,0,0.3); overflow: hidden; }
+        .momma-face { width: 60%; height: 65%; background: var(--skin); border-radius: 50%; position: absolute; bottom: 10%; left: 20%; z-index: 2; }
+        .momma-wrap { width: 110%; height: 50%; background: var(--wrap); border-radius: 50% 50% 0 0; position: absolute; top: -5%; left: -5%; z-index: 3; box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2); }
