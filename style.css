@@ -1,20 +1,211 @@
-:root { --bg: #000; --accent: #ff4500; --gold: #ffd700; --bubble: #222; }
-body { background: var(--bg); color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin:0; }
-.header { text-align: center; margin-bottom: 20px; }
-.fire { font-size: 50px; }
-.streak-val { font-size: 18px; color: var(--gold); font-weight: bold; }
-.brenda-zone { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 400px; margin-bottom: 25px; }
-.momma-head { width: 70px; height: 70px; background: #5d3a1a; border-radius: 50%; border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 40px; flex-shrink: 0; box-shadow: 0 0 10px var(--accent); }
-.bubble { background: var(--bubble); border-radius: 15px; padding: 15px; position: relative; flex-grow: 1; border: 1px solid #333; }
-.bubble::after { content: ''; position: absolute; left: -10px; top: 25px; border-width: 10px 10px 10px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
-#speech { font-size: 16px; font-weight: bold; margin: 0; font-style: italic; }
-.card { background: #111; border-radius: 15px; padding: 20px; width: 100%; max-width: 400px; border: 1px solid #222; text-align: center; }
-input { background: #000; border: 2px solid #333; color: #fff; padding: 15px; font-size: 28px; border-radius: 10px; text-align: center; width: 100%; margin-bottom: 15px; outline: none; }
-button { background: var(--accent); color: #fff; border: none; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 10px; width: 100%; cursor: pointer; box-shadow: 0 4px 0 #802300; }
-button:active { transform: translateY(2px); box-shadow: none; }
-.water-section { margin-top: 30px; width: 100%; max-width: 400px; text-align: center; }
-.water-title { font-size: 12px; color: #00fbff; font-weight: bold; margin-bottom: 10px; }
-.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-.drop { font-size: 32px; opacity: 0.2; transition: 0.3s; cursor: pointer; }
-.drop.active { opacity: 1; filter: drop-shadow(0 0 8px #00fbff); transform: scale(1.1); }
-.footer { margin-top: auto; font-size: 12px; color: #555; padding: 20px; }
+/* --- 靈魂進化版 style.css --- */
+
+:root {
+    --bg: #000; 
+    --accent: #ff4500; /* 霸氣橘 */
+    --gold: #ffd700;   /* 黃金耳環 */
+    --bubble: #222;    /* 對話框深灰 */
+    --skin: #5d3a1a;   /* 媽咪膚色 */
+    --wrap: #e63946;   /* 頭巾鮮紅 */
+}
+
+body {
+    background: var(--bg);
+    color: #fff;
+    font-family: -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* 紀錄圖示 */
+.header { text-align: center; margin-bottom: 25px; }
+.fire { font-size: 50px; filter: drop-shadow(0 0 10px var(--accent)); }
+.streak-val { font-size: 18px; color: var(--gold); font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Brenda 區塊 */
+.brenda-zone {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 30px;
+}
+
+/* ========================================= */
+/* --- 專業 CSS 繪製的黑人大媽頭像 --- */
+/* ========================================= */
+.momma-head {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #1a1a1a; /* 圓形底座 */
+    border: 3px solid var(--accent); /* 邊框 */
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(255,69,0,0.3);
+    overflow: hidden; /* 確保內容不超出圓形 */
+}
+
+/* 1. 膚色臉部 base */
+.momma-head::before {
+    content: '';
+    position: absolute;
+    width: 65%;
+    height: 70%;
+    background: var(--skin);
+    border-radius: 50%;
+    bottom: 10%;
+    left: 17.5%;
+    z-index: 1;
+}
+
+/* 2. 紅色頭巾 Wrap */
+.momma-head::after {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 60%;
+    background: var(--wrap);
+    border-radius: 50% 50% 0 0;
+    top: -5%;
+    left: -10%;
+    z-index: 2;
+    box-shadow: inset 0 -5px 0 rgba(0,0,0,0.2);
+}
+
+/* 3. 眼睛 & 嘴巴 (嚴肅表情) */
+.momma-head span {
+    position: absolute;
+    background: #000;
+    z-index: 3;
+}
+/* 眼睛 */
+.momma-head span.eye { width: 8px; height: 8px; border-radius: 50%; top: 40%; }
+.momma-head span.eye-l { left: 30%; }
+.momma-head span.eye-r { right: 30%; }
+/* 嘴巴 (一條嚴肅的直線) */
+.momma-head span.mouth { width: 35%; height: 3px; border-radius: 2px; bottom: 28%; left: 32.5%; }
+
+/* 4. 金色大耳環 Earrings */
+.momma-head div.earring {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 3px solid var(--gold);
+    border-radius: 50%;
+    z-index: 0; /* 在膚色後面 */
+    bottom: 15%;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+.momma-head div.earring-l { left: 2px; }
+.momma-head div.earring-r { right: 2px; }
+
+/* 5. 頭巾結 Knot */
+.momma-head div.knot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--wrap);
+    border-radius: 50%;
+    top: 15px;
+    right: 15px;
+    z-index: 4;
+    border: 2px solid rgba(0,0,0,0.3);
+}
+/* ========================================= */
+
+/* 對話框 */
+.bubble {
+    background: var(--bubble);
+    border-radius: 18px;
+    padding: 20px;
+    position: relative;
+    border: 1px solid #333;
+    flex-grow: 1;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+.bubble::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 35px;
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent var(--bubble) transparent transparent;
+}
+#speech {
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: bold;
+    margin: 0;
+    font-style: italic;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+/* 輸入區與按鈕 */
+.card {
+    background: #111;
+    border-radius: 18px;
+    padding: 25px;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #222;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    text-align: center;
+}
+input {
+    background: #000;
+    border: 2px solid #333;
+    color: #fff;
+    padding: 18px;
+    font-size: 32px;
+    border-radius: 12px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    outline: none;
+    transition: 0.2s;
+}
+input:focus { border-color: var(--accent); background: #050505; }
+button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 18px;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 12px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #802300;
+    transition: 0.1s;
+}
+button:active { transform: translateY(3px); box-shadow: 0 2px 0 #802300; }
+
+/* 水杯挑戰 */
+.water-section {
+    margin-top: 35px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    background: rgba(0,251,255,0.03);
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid rgba(0,251,255,0.1);
+}
+.water-title { font-size: 14px; color: #00fbff; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.drop { font-size: 36px; cursor: pointer; opacity: 0.15; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.drop.active { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 10px #00fbff); }
+
+/* 狀態列 */
+.footer { margin-top: auto; font-size: 12px; color: #555; padding: 25px; text-align: center; letter-spacing: 1px; }
