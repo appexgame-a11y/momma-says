@@ -7,33 +7,118 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        :root { --bg: #050505; --accent: #ff4500; --text: #f0f0f0; --gold: #ffd700; --card: #151515; --bubble: #222; }
+        :root { --bg: #000; --accent: #ff4500; --text: #fff; --gold: #ffd700; --bubble: #222; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, "PingFang TC", sans-serif; display: flex; flex-direction: column; align-items: center; padding: calc(env(safe-area-inset-top) + 20px) 20px 30px; min-height: 100vh; margin:0; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; padding: calc(env(safe-area-inset-top) + 20px) 20px; min-height: 100vh; margin:0; }
         
-        /* 頂部紀錄 */
-        .header { text-align: center; margin-bottom: 25px; }
-        .fire { font-size: 50px; filter: drop-shadow(0 0 15px var(--accent)); }
-        .streak-val { font-size: 20px; font-weight: 900; color: var(--gold); letter-spacing: 1px; margin-top: 5px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .fire { font-size: 50px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .streak-val { font-size: 20px; font-weight: 900; color: var(--gold); margin-top: 5px; }
 
-        /* Brenda + 對話框 區塊 */
-        .brenda-container { display: flex; align-items: flex-start; gap: 15px; width: 100%; max-width: 420px; margin-bottom: 30px; }
+        /* Brenda 區塊 */
+        .brenda-wrapper { display: flex; align-items: flex-start; gap: 10px; width: 100%; max-width: 400px; margin-bottom: 25px; }
+        .brenda-icon { font-size: 50px; background: #1a1a1a; border-radius: 50%; padding: 10px; border: 2px solid var(--accent); flex-shrink: 0; }
         
-        /* 媽咪大頭貼 (圓形) */
-        .brenda-avatar { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--accent); overflow: hidden; box-shadow: 0 5px 15px rgba(255,69,0,0.3); flex-shrink: 0; position: relative; }
-        /* 這裡放媽咪的頭像 (使用 Flaticon 卡通 Icon 代替) */
-        .brenda-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* 對話框氣泡 */
-        .speech-bubble { background: var(--bubble); border-radius: 18px; padding: 20px; position: relative; border: 1px solid #333; flex-grow: 1; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        /* 氣泡尾巴 */
-        .speech-bubble::before { content: ''; position: absolute; left: -10px; top: 25px; border-width: 10px 10px 10px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
-        
-        #speech { font-size: 17px; line-height: 1.5; font-weight: 700; color: #fff; margin:0; font-style: italic; }
+        /* 對話框 */
+        .bubble { background: var(--bubble); border-radius: 15px; padding: 15px; position: relative; border: 1px solid #333; flex-grow: 1; }
+        .bubble::before { content: ''; position: absolute; left: -8px; top: 20px; border-width: 8px 8px 8px 0; border-style: solid; border-color: transparent var(--bubble) transparent transparent; }
+        #speech { font-size: 16px; line-height: 1.5; font-weight: bold; margin: 0; font-style: italic; }
 
-        /* 輸入區與按鈕 */
-        .input-card { background: var(--card); border-radius: 20px; padding: 20px; width: 100%; max-width: 420px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .input-group { display: flex; flex-direction: column; gap: 15px; }
-        input { background: #0b0b0b; border: 2px solid #333; color: #fff; padding: 18px; font-size: 30px; border-radius: 12px; text-align: center; outline: none; transition: 0.3s; width: 100%; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(255,69,0,0.2); }
-        button { background: var
+        /* 輸入與按鈕 */
+        .card { background: #111; border-radius: 15px; padding: 20px; width: 100%; max-width: 400px; border: 1px solid #222; }
+        input { background: #000; border: 2px solid #333; color: #fff; padding: 15px; font-size: 28px; border-radius: 10px; text-align: center; width: 100%; margin-bottom: 15px; outline: none; }
+        input:focus { border-color: var(--accent); }
+        button { background: var(--accent); color: #fff; border: none; padding: 15px; font-size: 18px; font-weight: 900; border-radius: 10px; width: 100%; cursor: pointer; box-shadow: 0 4px 0 #802300; }
+        button:active { transform: translateY(2px); box-shadow: none; }
+
+        /* 水杯挑戰 */
+        .water-box { margin-top: 30px; width: 100%; max-width: 400px; text-align: center; background: rgba(0,251,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(0,251,255,0.1); }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
+        .drop { font-size: 32px; cursor: pointer; opacity: 0.15; transition: 0.3s; }
+        .drop.active { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 8px #00fbff); }
+        
+        .footer { margin-top: auto; font-size: 12px; color: #444; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="fire">🔥</div>
+        <div class="streak-val"><span id="streak">0</span> 天紀錄</div>
+    </div>
+
+    <div class="brenda-wrapper">
+        <div class="brenda-icon">👩🏾‍</div>
+        <div class="bubble">
+            <p id="speech">「妳這兩天跑哪去了？是不是背著我偷吃好料的？！」</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <input type="number" id="weight" placeholder="0.0" step="0.1" inputmode="decimal">
+        <button onclick="log()">給我寫下來！</button>
+    </div>
+
+    <div class="water-box">
+        <div style="font-size: 12px; color: #00fbff; font-weight: bold;">💧 3000cc 飲水進度</div>
+        <div class="grid">
+            <span class="drop" onclick="d(0)">💧</span><span class="drop" onclick="d(1)">💧</span>
+            <span class="drop" onclick="d(2)">💧</span><span class="drop" onclick="d(3)">💧</span>
+            <span class="drop" onclick="d(4)">💧</span><span class="drop" onclick="d(5)">💧</span>
+            <span class="drop" onclick="d(6)">💧</span><span class="drop" onclick="d(7)">💧</span>
+        </div>
+        <div id="wLabel" style="font-size: 11px; margin-top: 10px; color: #00fbff; opacity: 0.6;">0 / 3000 cc</div>
+    </div>
+
+    <div id="fast" class="footer">掃描斷食狀態中...</div>
+
+    <script>
+        let s = JSON.parse(localStorage.getItem('momma_v5')) || { streak: 0, last: null, water: 0 };
+
+        function init() {
+            document.getElementById('streak').innerText = s.streak;
+            upWater();
+            ckFast();
+        }
+
+        function log() {
+            const w = document.getElementById('weight').value;
+            const t = new Date().toDateString();
+            if(!w) return alert("輸入數字，別想逃避！");
+            if(s.last === t) {
+                document.getElementById('speech').innerText = "「今天量過了！去做深蹲，別在這煩我！」";
+                return;
+            }
+            s.streak++; s.last = t; s.water = 0; save();
+            document.getElementById('streak').innerText = s.streak;
+            document.getElementById('speech').innerText = "「紀錄好了。明天要是數字變大，妳就死定了！」";
+            upWater();
+        }
+
+        function d(i) {
+            s.water = i + 1; save(); upWater();
+            if(s.water === 8) document.getElementById('speech').innerText = "「喝完 3000cc 了？算妳乖，腦袋總算清醒點了。」";
+        }
+
+        function upWater() {
+            document.querySelectorAll('.drop').forEach((x, i) => {
+                i < s.water ? x.classList.add('active') : x.classList.remove('active');
+            });
+            document.getElementById('wLabel').innerText = `${s.water * 375} / 3000 cc`;
+        }
+
+        function ckFast() {
+            const n = new Date(); const d = n.getDay(); const h = n.getHours();
+            let m = "";
+            if(d === 1 && h >= 18) m = "🚫 週一：36H 斷食開始！不准碰冰箱！";
+            else if(d === 2) m = "⏳ 週二：斷食中。妳還沒餓死，撐住！";
+            else if(d === 3 && h < 8) m = "🏁 週三：快結束了，這就是意志力！";
+            else m = "✅ 進食窗口開放，但別吃得像神隱少女裡的豬！";
+            document.getElementById('fast').innerText = m;
+        }
+
+        function save() { localStorage.setItem('momma_v5', JSON.stringify(s)); }
+        init();
+    </script>
+</body>
+</html>
